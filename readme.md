@@ -4,4 +4,24 @@ This example is a complete application using a restaurant dataset sample provide
 
 [![Main screenshot](https://nhogs.github.io/popoto-examples/factual/screen/main.png "Main screenshot")](https://nhogs.github.io/popoto-examples/factual/index.html)
 
-[Live version here](https://nhogs.github.io/popoto-examples/factual/index.html)
+
+
+*File csv bisa diunduh didalam folder csvnya
+
+Silahkan ikuti perintah berikut untuk load file csv kedalam neo4jnya, dan membuat relasi dari Label Coffeshop(cs) ke Label Alamat(a) dan dipisahkan dengan query merge. Yang dimana relasinya adalaha Coffe Shop yang BERADA_DI Alamat:
+
+1. Load CSV 
+LOAD CSV WITH HEADERS FROM "file:///coffee_shop.csv" AS row
+MERGE (cs:Coffee {id_cs: row.id_cs})
+ON CREATE SET cs.name = row.name,
+              cs.rating = row.rating,
+              cs.review_date = row.review_date,
+              cs.review = row.review,
+              cs.price = row.price,
+              cs.long = row.long,
+              cs.lat = row.lat
+MERGE (a:Alamat {alamat: row.alamat})
+MERGE (cs)-[r:BERADA_DI]->(a);
+
+
+
